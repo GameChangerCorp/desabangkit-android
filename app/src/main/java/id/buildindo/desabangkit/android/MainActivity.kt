@@ -1,5 +1,6 @@
 package id.buildindo.desabangkit.android
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var viewModel: PhotoViewModel
 
+    companion object{
+        lateinit var appContext : Context
+    }
 
     private var getFile: File? = null
 
@@ -27,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //TODO : INFO - Need create ApplicationController
+        appContext = applicationContext
 
         viewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
 
