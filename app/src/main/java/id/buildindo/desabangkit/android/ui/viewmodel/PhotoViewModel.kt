@@ -1,10 +1,12 @@
-package id.buildindo.desabangkit.android
+package id.buildindo.desabangkit.android.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import id.buildindo.desabangkit.android.core.data.remote.api.ApiConfig
+import id.buildindo.desabangkit.android.core.data.remote.response.AddPhotoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody

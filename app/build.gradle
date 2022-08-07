@@ -11,7 +11,7 @@ plugins {
 android {
     signingConfigs {
         release {
-            storeFile file('D:\\Project\\Android\\desabangkit-android\\desabangkit.jks')
+            storeFile file('/Users/user/AndroidStudioProjects/desabangkitandroid/desabangkit.jks')
             storePassword 'GameChanger06'
             keyAlias 'DBA'
             keyPassword 'GameChanger06'
@@ -35,7 +35,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             firebaseAppDistribution {
                 groups="developer-team"
-                serviceCredentialsFile = file("D:\\Project\\Android\\desabangkit-android\\app\\desa-bangkit-android-firebase-adminsdk-tqpv7-7ee1e1f525.json")
             }
             signingConfig signingConfigs.release
         }
@@ -43,7 +42,6 @@ android {
             debuggable true
             firebaseAppDistribution {
                 groups="developer-team"
-                serviceCredentialsFile = file("D:\\Project\\Android\\desabangkit-android\\app\\desa-bangkit-android-firebase-adminsdk-tqpv7-7ee1e1f525.json")
             }
         }
     }
