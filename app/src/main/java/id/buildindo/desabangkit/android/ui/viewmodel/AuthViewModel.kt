@@ -1,55 +1,63 @@
 package id.buildindo.desabangkit.android.ui.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import id.buildindo.desabangkit.android.core.data.ApiResponse
+import id.buildindo.desabangkit.android.core.data.Status
 import id.buildindo.desabangkit.android.core.data.remote.api.ApiConfig
 import id.buildindo.desabangkit.android.core.data.remote.response.login.LoginRequest
 import id.buildindo.desabangkit.android.core.data.remote.response.login.LoginResponse
 import id.buildindo.desabangkit.android.core.data.remote.response.register.RegisterRequest
 import id.buildindo.desabangkit.android.core.data.remote.response.register.RegisterResponse
+import id.buildindo.desabangkit.android.core.domain.usecase.IAuthUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import javax.inject.Inject
 
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(private val useCase: IAuthUseCase) : ViewModel() {
+
     private val _registerResponse = MutableLiveData<RegisterResponse>()
-    val registerResponse : LiveData<RegisterResponse> = _registerResponse
+    val registerResponse: LiveData<RegisterResponse> = _registerResponse
 
     private val _loginResponse = MutableLiveData<LoginResponse>()
-    val loginResponse : LiveData<LoginResponse> = _loginResponse
+    val loginResponse: LiveData<LoginResponse> = _loginResponse
 
-    fun registerUser(body : RegisterRequest){
-        viewModelScope.launch(Dispatchers.IO){
+    fun registerUser(body: RegisterRequest) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                val client = ApiConfig.apiInstance.registerUser(body)
-                if (client.isSuccessful){
-                    _registerResponse.postValue(client.body())
-                    Log.d("Success: ", client.body().toString())
-                }else{
-                    val messageError = JSONObject(client.errorBody()!!.charStream().readText())
-                    _registerResponse.postValue(RegisterResponse(messages = messageError.getString("messages")))
+                val response = useCase.registerUser(body)
+                if (response.isSuccessful) {
+                    _registerResponse.postValue(response.body())
+                } else {
+                    val messageError = JSONObject(response.errorBody()!!.charStream().readText())
+                    _registerResponse.postValue(
+                        RegisterResponse(
+                            messages = messageError.getString("messages"),
+                            code = messageError.getInt("code")
+                        )
+                    )
                 }
-            }catch (ex: Exception){
+            } catch (ex: Exception) {
                 Log.d("ERROR: ", ex.toString())
             }
         }
     }
 
-    fun loginUser(body: LoginRequest){
-        viewModelScope.launch(Dispatchers.IO){
+    fun loginUser(body: LoginRequest) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                val client = ApiConfig.apiInstance.loginUser(body)
-                if (client.isSuccessful){
+                val client = useCase.loginUser(body)
+                if (client.isSuccessful) {
                     _loginResponse.postValue(client.body())
                     Log.d("Success: ", client.body().toString())
-                }else{
+                } else {
                     val messageError = JSONObject(client.errorBody()!!.charStream().readText())
                     _loginResponse.postValue(LoginResponse(messages = messageError.getString("messages")))
                 }
-            }catch (ex: Exception){
+            } catch (ex: Exception) {
                 Log.d("ERROR: ", ex.toString())
             }
         }
