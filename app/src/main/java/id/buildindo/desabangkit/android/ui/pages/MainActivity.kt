@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnUpload.setOnClickListener {
-            uploadImage()
+//            uploadImage()
         }
 
         viewModel.addStory.observe(this) {
@@ -73,19 +73,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun uploadImage() {
-        if (getFile != null) {
-            val file = reduceFileImage(getFile as File)
-            val requestImageFile = file.asRequestBody("file".toMediaTypeOrNull())
-            val imageMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "file",
-                file.name,
-                requestImageFile,
-            )
-            viewModel.addPhoto(imageMultiPart)
-
-        }
-    }
+//    private fun uploadImage() {
+//        if (getFile != null) {
+//            val file = reduceFileImage(getFile as File)
+//            val requestImageFile = file.asRequestBody("file".toMediaTypeOrNull())
+//            val imageMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData(
+//                "file",
+//                file.name,
+//                requestImageFile,
+//            )
+//            viewModel.addPhoto(imageMultiPart)
+//
+//        }
+//    }
 
 
     private fun startGallery() {

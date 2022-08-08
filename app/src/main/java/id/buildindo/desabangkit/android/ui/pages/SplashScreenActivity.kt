@@ -29,7 +29,6 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(_binding.root)
 
         supportActionBar?.hide()
-        appContext = applicationContext
 
         val pref = DataStorePreference.getInstance(dataStore)
         _viewModelDataStore = ViewModelProvider(this, PreferenceViewModelFactory(pref))[DatastoreViewModel::class.java]
@@ -47,11 +46,6 @@ class SplashScreenActivity : AppCompatActivity() {
             }
             finish()
         }, 4000)
-    }
-
-
-    companion object{
-        lateinit var appContext : Context
     }
 
 }
