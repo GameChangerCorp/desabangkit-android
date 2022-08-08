@@ -1,22 +1,27 @@
 package id.buildindo.desabangkit.android.ui.pages
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import id.buildindo.desabangkit.android.core.data.ApiResponse
+import id.buildindo.desabangkit.android.core.data.Status
 import id.buildindo.desabangkit.android.core.data.remote.response.register.RegisterRequest
 import id.buildindo.desabangkit.android.core.utils.InteractionUtils.hideKeyboard
 import id.buildindo.desabangkit.android.databinding.ActivityRegisterBinding
 import id.buildindo.desabangkit.android.ui.viewmodel.AuthViewModel
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var _binding : ActivityRegisterBinding
-    private lateinit var _viewModel: AuthViewModel
+    private lateinit var _binding: ActivityRegisterBinding
+    private val _viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +30,6 @@ class RegisterActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        _viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
-
         _binding.btnRegister.setOnClickListener {
             signup()
             hideKeyboard()
@@ -34,29 +37,30 @@ class RegisterActivity : AppCompatActivity() {
         _binding.btnLogin.setOnClickListener {
             moveToLoginActivity()
         }
-
-        _viewModel.registerResponse.observe(this){
-            if (it.code == 200) {
-                moveToLoginActivity()
-                Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
-                showLoading(false)
-            }else{
-                Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
-                showLoading(false)
-            }
-
+        _viewModel.registerResponse.observe(this@RegisterActivity) {
             _binding.btnRegister.isClickable = true
             _binding.btnRegister.isActivated = true
+            when(it.code){
+                200 -> {
+                    moveToLoginActivity()
+                    Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
+                    showLoading(false)
+                }
+                400 -> {
+                    Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
+                    showLoading(false)
+                }
+            }
         }
     }
 
-    private fun moveToLoginActivity(){
+    private fun moveToLoginActivity() {
         intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun signup(){
+    private fun signup() {
         _binding.apply {
             val name = edtFullname.text.toString().trim()
             val nameCondition: Boolean
@@ -122,7 +126,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            if (emailCondition && nameCondition && passwordCondition){
+            if (emailCondition && nameCondition && passwordCondition) {
                 btnRegister.isClickable = false
                 btnRegister.isActivated = false
                 _viewModel.registerUser(
@@ -133,7 +137,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(loading: Boolean){
-        if (loading) _binding.progressBar.visibility = View.VISIBLE else _binding.progressBar.visibility = View.GONE
+    private fun showLoading(loading: Boolean) {
+        if (loading) _binding.progressBar.visibility =
+            View.VISIBLE else _binding.progressBar.visibility = View.GONE
     }
 }

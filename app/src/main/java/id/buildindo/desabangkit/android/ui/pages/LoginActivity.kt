@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.core.data.local.datastore.DataStorePreference
 import id.buildindo.desabangkit.android.core.data.remote.response.login.LoginRequest
 import id.buildindo.desabangkit.android.core.data.remote.response.register.RegisterRequest
@@ -20,14 +22,14 @@ import id.buildindo.desabangkit.android.databinding.ActivityLoginBinding
 import id.buildindo.desabangkit.android.ui.viewmodel.AuthViewModel
 import id.buildindo.desabangkit.android.ui.viewmodel.DatastoreViewModel
 import id.buildindo.desabangkit.android.ui.viewmodel.PreferenceViewModelFactory
-
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 
     private lateinit var _binding : ActivityLoginBinding
-    private lateinit var _viewModel : AuthViewModel
+    private val _viewModel: AuthViewModel by viewModels()
     private lateinit var _viewModelDataStore : DatastoreViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
 
-        _viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         val pref = DataStorePreference.getInstance(dataStore)
         _viewModelDataStore = ViewModelProvider(this, PreferenceViewModelFactory(pref))[DatastoreViewModel::class.java]
 
@@ -52,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
-        _viewModel.loginResponse.observe(this){
+        _viewModel.loginResponse.observe(this@LoginActivity){
             if (it.code == 200){
                 showLoading(false)
                 _viewModelDataStore.saveLoginState(true)
