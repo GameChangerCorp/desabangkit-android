@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Desa Bangkit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip">Lewati</string>
+    <string name="onboarding_title">Title_1</string>
+    <string name="onboarding_subtitle">Ini adalah Sub title</string>
+    <string name="next">Lanjut</string>
+    <string name="end_title">Selesai</string>
 </resources>
