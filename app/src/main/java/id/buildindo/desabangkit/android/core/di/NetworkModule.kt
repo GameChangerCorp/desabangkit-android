@@ -1,18 +1,14 @@
 package id.buildindo.desabangkit.android.core.di
 
 import android.content.Context
-import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import id.buildindo.desabangkit.android.MyApplication
 import id.buildindo.desabangkit.android.core.data.remote.api.ApiConfig
 import id.buildindo.desabangkit.android.core.data.remote.api.ApiService
-import id.buildindo.desabangkit.android.ui.pages.SplashScreenActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
