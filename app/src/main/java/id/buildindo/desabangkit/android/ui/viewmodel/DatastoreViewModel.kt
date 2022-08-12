@@ -34,6 +34,16 @@ class DatastoreViewModel(private val pref: DataStorePreference) : ViewModel() {
             pref.saveUserName(username)
         }
     }
+
+    fun getOnBoardingState(): LiveData<Boolean> {
+        return pref.getOnBoardingState().asLiveData()
+    }
+
+    fun saveOnBoardingState(state: Boolean){
+        viewModelScope.launch {
+            pref.saveOnBoardingState(state)
+        }
+    }
 }
 
 class PreferenceViewModelFactory(private val pref: DataStorePreference) : ViewModelProvider.NewInstanceFactory() {

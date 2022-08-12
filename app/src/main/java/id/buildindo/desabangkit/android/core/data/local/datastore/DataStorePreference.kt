@@ -9,10 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class DataStorePreference private constructor(private val dataStore: DataStore<Preferences>) {
-    private val LOGIN_STATE = booleanPreferencesKey("login")
-    private val BEARER_KEY = stringPreferencesKey("bearer")
-    private val USERNAME = stringPreferencesKey("name")
-
     fun getLoginState(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[LOGIN_STATE] ?: false
@@ -31,6 +27,11 @@ class DataStorePreference private constructor(private val dataStore: DataStore<P
         }
     }
 
+    fun getOnBoardingState(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[ONBOARDING_STATE] ?: false
+        }
+    }
 
     suspend fun saveLoginState(loginState: Boolean) {
         dataStore.edit { preferences ->
@@ -50,7 +51,18 @@ class DataStorePreference private constructor(private val dataStore: DataStore<P
         }
     }
 
+    suspend fun saveOnBoardingState(state: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[ONBOARDING_STATE] = state
+        }
+    }
+
     companion object {
+        private val LOGIN_STATE = booleanPreferencesKey("login")
+        private val BEARER_KEY = stringPreferencesKey("bearer")
+        private val USERNAME = stringPreferencesKey("name")
+        private val ONBOARDING_STATE = booleanPreferencesKey("onboarding")
+
         @Volatile
         private var INSTANCE: DataStorePreference? = null
 
