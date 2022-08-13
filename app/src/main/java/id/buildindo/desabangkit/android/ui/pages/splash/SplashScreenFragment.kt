@@ -53,15 +53,17 @@ class SplashScreenFragment : Fragment() {
             if (_loginState) {
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent)
+                activity?.finish()
             }else{
                 if (_onboardState){
                     val intent = Intent(requireContext(), LoginActivity::class.java)
+                    activity?.finish()
                     startActivity(intent)
                 }else{
                     findNavController().navigate(R.id.action_splashScreenFragment_to_onboardingFragment)
                 }
             }
-        }, 2000)
+        }, 3000)
     }
 
     private fun observeDataStore(){
