@@ -16,7 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="id.buildindo.desabangkit.android.ui.pages.onboarding.OnboardingFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.onboarding.OnBoardingFragment"
         android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" />
+        tools:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/action_onboardingFragment_self"
+            app:destination="@id/onboardingFragment" />
+    </fragment>
 </navigation>

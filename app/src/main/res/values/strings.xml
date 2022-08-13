@@ -3,8 +3,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="skip">Lewati</string>
-    <string name="onboarding_title">Title_1</string>
-    <string name="onboarding_subtitle">Ini adalah Sub title</string>
+    <string name="onboarding_title_1">Pangan Segar</string>
+    <string name="onboarding_subtitle_1">Pangan segar yang berkualitas tinggi, tetap aman, higienis, dan bermutu</string>
+    <string name="onboarding_title_2">Pengiriman</string>
+    <string name="onboarding_subtitle_2">Disortir terlebih dahulu sebelum dikemas dan dikirim, agar tetap awet sampai tujuan</string>
+    <string name="onboarding_title_3">Mutu Pangan</string>
+    <string name="onboarding_subtitle_3">Proses budidaya pangan telah diuji sesuai dengan standar sehingga aman untuk dikonsumsi</string>
     <string name="next">Lanjut</string>
     <string name="end_title">Selesai</string>
 </resources>

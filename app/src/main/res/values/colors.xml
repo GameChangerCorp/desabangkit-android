@@ -8,4 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="shadow_60">#99363636</color>
+
+    <!--Fern-->
+    <color name="fern">#53B176</color>
+    <color name="fern_50">#8053B176</color>
+
+    <color name="observatory">#038E6A</color>
+
+    <color name="silver_chalice">#A1A1A1</color>
 </resources>
