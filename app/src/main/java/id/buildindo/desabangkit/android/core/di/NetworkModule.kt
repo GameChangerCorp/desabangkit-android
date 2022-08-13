@@ -19,15 +19,10 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    companion object{
-        lateinit var context: Context
-    }
-
     private val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-
     @Provides
-    fun provideChuckerIntreceptor(@ApplicationContext context: Context) : ChuckerInterceptor{
+    fun provideChuckInterceptor(@ApplicationContext context: Context) : ChuckerInterceptor{
         return ChuckerInterceptor.Builder(context)
             .collector(ApiConfig().chuckerCollector)
             .maxContentLength(250_000L)
@@ -37,11 +32,11 @@ class NetworkModule {
 
     @Provides
     fun provideOkHttpClient(
-        chuckerInterceptor: ChuckerInterceptor
+        chuckInterceptor: ChuckerInterceptor
     ) : OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(chuckerInterceptor)
+            .addInterceptor(chuckInterceptor)
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
