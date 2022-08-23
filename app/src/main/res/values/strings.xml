@@ -11,4 +11,22 @@
     <string name="onboarding_subtitle_3">Proses budidaya pangan telah diuji sesuai dengan standar sehingga aman untuk dikonsumsi</string>
     <string name="next">Lanjut</string>
     <string name="end_title">Selesai</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="signin">Masuk</string>
+    <string name="dont_have_account">Belum memiliki akun ? Daftar</string>
+    <string name="have_account">Sudah memiliki akun ? Silahkan Login</string>
+    <string name="roles">Partner</string>
+    <string name="signup">Daftar</string>
+    <string name="subtitle_success_register">Selamat anda berhasil terdaftar, silahkan login</string>
+    <string name="sucess_register_title">Proses Selesai</string>
+    <string name="go_to_login_page">Pergi ke halaman login</string>
+    <string name="home">Beranda</string>
+    <string name="pasok_produk">Pasok Produk</string>
+    <string name="transaction">Transaksi</string>
+    <string name="account">Akun</string>
+    <string name="subtitle_check_verification">Anda belum melakukan verifikasi, silahkan cek email</string>
+    <string name="go_to_email_app">Pergi ke aplikasi Email</string>
+    <string name="resend_verification_txt">Tidak mendapatkan email verifikasi</string>
 </resources>
