@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/partner_navigation"
+    app:startDestination="@id/navigation_beranda">
+
+    <fragment
+        android:id="@+id/navigation_beranda"
+        android:name="id.buildindo.desabangkit.android.ui.pages.partner.PartnerBerandaFragment"
+        android:label="fragment_partner_beranda"
+        tools:layout="@layout/fragment_partner_beranda" />
+    <fragment
+        android:id="@+id/navigation_transaction"
+        android:name="id.buildindo.desabangkit.android.ui.pages.partner.TransactionFragment"
+        android:label="fragment_partner_transaction"
+        tools:layout="@layout/fragment_partner_transaction" />
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="id.buildindo.desabangkit.android.ui.pages.partner.AccountPartnerFragment"
+        android:label="fragment_account_partner"
+        tools:layout="@layout/fragment_account_partner" />
+    <fragment
+        android:id="@+id/navigation_supply"
+        android:name="id.buildindo.desabangkit.android.ui.pages.partner.SupplyProductFragment"
+        android:label="fragment_supply_product"
+        tools:layout="@layout/fragment_supply_product" />
+</navigation>

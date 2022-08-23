@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_navigation"
+    app:startDestination="@id/registerFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.auth.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <argument
+            android:name="fullName"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_registerFragment_to_chooseRolesFragment"
+            app:destination="@id/chooseRolesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseRolesFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.auth.ChooseRolesFragment"
+        android:label="fragment_choose_roles"
+        tools:layout="@layout/fragment_choose_roles" >
+        <action
+            android:id="@+id/action_chooseRolesFragment_to_registrasionSuccessFragment"
+            app:destination="@id/registrasionSuccessFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_chooseRolesFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrasionSuccessFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.auth.RegistrasionSuccessFragment"
+        android:label="fragment_registrasion_success"
+        tools:layout="@layout/fragment_registrasion_success" />
+
+</navigation>
