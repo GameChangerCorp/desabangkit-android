@@ -1,36 +1,33 @@
-package id.buildindo.desabangkit.android.ui.pages
+package id.buildindo.desabangkit.android.ui.pages.auth
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import id.buildindo.desabangkit.android.core.data.local.datastore.DataStorePreference
 import id.buildindo.desabangkit.android.core.data.remote.response.login.LoginRequest
-import id.buildindo.desabangkit.android.core.data.remote.response.register.RegisterRequest
 import id.buildindo.desabangkit.android.core.utils.InteractionUtils.hideKeyboard
 import id.buildindo.desabangkit.android.databinding.ActivityLoginBinding
+import id.buildindo.desabangkit.android.ui.pages.CustomerDashboardActivity
+import id.buildindo.desabangkit.android.ui.pages.partner.PartnerDashboardActivity
 import id.buildindo.desabangkit.android.ui.viewmodel.AuthViewModel
 import id.buildindo.desabangkit.android.ui.viewmodel.DatastoreViewModel
-import id.buildindo.desabangkit.android.ui.viewmodel.PreferenceViewModelFactory
+import timber.log.Timber
+
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-
 
     private lateinit var _binding : ActivityLoginBinding
     private val _viewModel: AuthViewModel by viewModels()
     private lateinit var _viewModelDataStore : DatastoreViewModel
+
+    private var _email = ""
+    private var _password = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-
-        val pref = DataStorePreference.getInstance(dataStore)
-        _viewModelDataStore = ViewModelProvider(this, PreferenceViewModelFactory(pref))[DatastoreViewModel::class.java]
+        _viewModelDataStore = ViewModelProvider(this)[DatastoreViewModel::class.java]
 
         _binding.btnRegister.setOnClickListener {
             intent = Intent(this, RegisterActivity::class.java)
@@ -54,43 +49,59 @@ class LoginActivity : AppCompatActivity() {
         }
 
         _viewModel.loginResponse.observe(this@LoginActivity){
+            Timber.d("cek dapet datanya ga ya coy $it")
             if (it.code == 200){
                 showLoading(false)
                 _viewModelDataStore.saveLoginState(true)
                 _viewModelDataStore.saveBearerToken(it.result?.token!!)
                 _viewModelDataStore.saveUsername(it.result.account?.fullname!!)
-                moveToMainActivity()
+                val roles = it.result.account.role?.get(0)?.rolelabel!!
+                _viewModelDataStore.saveUserRoles(roles)
+                moveToDashboard(roles)
                 Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
             }else{
+                if (it.messages.toString() == "need to verification email"){
+                    intent = Intent(this, AccountVerificationActivity::class.java)
+                        .putExtra("email", _email)
+                        .putExtra("password", _password)
+                    startActivity(intent)
+                }
                 showLoading(false)
                 Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
             }
-
-            _binding.btnLogin.isClickable = true
-            _binding.btnLogin.isActivated = true
         }
     }
 
-    private fun moveToMainActivity(){
-        intent = Intent(this, MainActivity::class.java)
+    private fun moveToDashboard(roles: String){
+        when(roles){
+            "PPN" -> {
+                moveToActivity<PartnerDashboardActivity>()
+            }
+            "Customer" -> {
+                moveToActivity<CustomerDashboardActivity>()
+            }
+        }
+    }
+
+    private inline fun <reified T> moveToActivity() {
+        intent = Intent(this, T::class.java)
         startActivity(intent)
         finish()
     }
 
     private fun login(){
         _binding.apply {
-            val email = edtEmail.text.toString().trim()
+            _email = edtEmail.text.toString().trim()
             val emailCondition: Boolean
-            val password = edtPassword.text.toString().trim()
+            _password = edtPassword.text.toString().trim()
             val passwordCondition: Boolean
 
-
             when {
-                email.isEmpty() -> {
+                _email.isEmpty() -> {
                     tilEmail.error = "Silahkan masukkan email Anda terlebih dahulu."
                     emailCondition = false
                 }
-                !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                !Patterns.EMAIL_ADDRESS.matcher(_email).matches() -> {
                     tilEmail.error = "Email Anda tidak valid."
                     emailCondition = false
                 }
@@ -101,11 +112,11 @@ class LoginActivity : AppCompatActivity() {
             }
 
             when {
-                password.isEmpty() -> {
+                _password.isEmpty() -> {
                     tilPassword.error = "Silahkan masukkan password Anda terlebih dahulu."
                     passwordCondition = false
                 }
-                password.length < 6 -> {
+                _password.length < 6 -> {
                     tilPassword.error = "Password harus lebih dari 6 Huruf"
                     passwordCondition = false
                 }
@@ -119,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
                 btnLogin.isClickable = false
                 btnLogin.isActivated = false
                 _viewModel.loginUser(
-                    LoginRequest(email, password)
+                    LoginRequest(_email, _password)
                 )
                 showLoading(true)
             }
