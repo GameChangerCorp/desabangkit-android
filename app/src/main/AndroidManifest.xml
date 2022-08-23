@@ -18,10 +18,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.pages.RegisterActivity"
+            android:name=".ui.pages.auth.AccountVerificationActivity"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="api-desabangkit.herokuapp.com"
+                    android:scheme="https" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".ui.pages.CustomerDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.pages.LoginActivity"
+            android:name=".ui.pages.partner.PartnerDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pages.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pages.auth.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.pages.splash.SplashScreenActivity"
@@ -37,7 +58,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.pages.MainActivity"
-            android:exported="false" />
+            android:exported="false"/>
     </application>
 
 </manifest>
