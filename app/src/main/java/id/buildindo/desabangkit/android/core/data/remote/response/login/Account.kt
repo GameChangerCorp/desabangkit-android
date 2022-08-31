@@ -1,11 +1,19 @@
 package id.buildindo.desabangkit.android.core.data.remote.response.login
 
+import com.google.gson.annotations.SerializedName
+import id.buildindo.desabangkit.android.core.data.remote.response.roles.Results as Roles
+
 data class Account(
-    val id : Int? = 0,
+    @SerializedName("ID")
+    val id : String? = "",
+    @SerializedName("Fullname")
     val fullname: String? = "",
+    @SerializedName("Email")
     val email: String? = "",
+    @SerializedName("Password")
     val password: String? = "",
-    val id_role: Int? = 0,
-    val role : Role? = null,
-    val urlPhoto: String? = ""
+    @SerializedName("Role_id")
+    val id_role: String? = "",
+    @SerializedName("roles")
+    val role : List<Roles>? = null,
 )
