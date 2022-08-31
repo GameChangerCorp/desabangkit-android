@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customer_navigation"
+    app:startDestination="@id/navigation_beranda">
+
+    <fragment
+        android:id="@+id/navigation_beranda"
+        android:name="id.buildindo.desabangkit.android.ui.pages.customer.CustomerBerandaFragment"
+        android:label="fragment_customer_beranda"
+        tools:layout="@layout/fragment_customer_beranda" >
+        <action
+            android:id="@+id/action_customerBerandaFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_navigation_beranda_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_transaction"
+        android:name="id.buildindo.desabangkit.android.ui.pages.customer.CustomerTransactionFragment"
+        android:label="fragment_customer_transaction"
+        tools:layout="@layout/fragment_customer_transaction" />
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="id.buildindo.desabangkit.android.ui.pages.customer.CustomerAccountFragment"
+        android:label="fragment_customer_account"
+        tools:layout="@layout/fragment_customer_account" />
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.CategoriesFragment"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+        <argument
+            android:name="productId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.ProductFragment"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+        <argument
+            android:name="productName"
+            app:argType="string" />
+        <argument
+            android:name="productCategory"
+            app:argType="string" />
+        <argument
+            android:name="productPrice"
+            app:argType="string" />
+        <argument
+            android:name="productUnit"
+            app:argType="string" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/detailProductFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.DetailProductFragment"
+        android:label="fragment_detail_product"
+        tools:layout="@layout/fragment_detail_product" >
+        <action
+            android:id="@+id/action_detailProductFragment_to_inputProductsFragment"
+            app:destination="@id/inputProductsFragment" />
+        <argument
+            android:name="productName"
+            app:argType="string" />
+        <argument
+            android:name="productCategory"
+            app:argType="string"/>
+        <argument
+            android:name="productPrice"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputProductsFragment"
+        android:name="id.buildindo.desabangkit.android.InputProductsFragment"
+        android:label="fragment_input_products"
+        tools:layout="@layout/fragment_input_products" >
+        <action
+            android:id="@+id/action_inputProductsFragment_to_navigation_transaction"
+            app:destination="@id/navigation_transaction"
+            app:popUpTo="@id/inputProductsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_inputProductsFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment"
+            app:popUpTo="@id/inputProductsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

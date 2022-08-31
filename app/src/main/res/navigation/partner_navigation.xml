@@ -24,5 +24,28 @@
         android:id="@+id/navigation_supply"
         android:name="id.buildindo.desabangkit.android.ui.pages.partner.SupplyProductFragment"
         android:label="fragment_supply_product"
-        tools:layout="@layout/fragment_supply_product" />
+        tools:layout="@layout/fragment_supply_product" >
+        <action
+            android:id="@+id/action_navigation_supply_to_inputProductsFragment2"
+            app:destination="@id/inputProductsFragment2" />
+        <argument
+            android:name="openFrom"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputProductsFragment2"
+        android:name="id.buildindo.desabangkit.android.InputProductsFragment"
+        android:label="fragment_input_products"
+        tools:layout="@layout/fragment_input_products" >
+        <action
+            android:id="@+id/action_inputProductsFragment2_to_navigation_supply"
+            app:destination="@id/navigation_supply"
+            app:popUpTo="@id/inputProductsFragment2"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_inputProductsFragment2_to_navigation_transaction"
+            app:destination="@id/navigation_transaction"
+            app:popUpTo="@id/inputProductsFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
