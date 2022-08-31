@@ -33,7 +33,7 @@
 
         </activity>
         <activity
-            android:name=".ui.pages.CustomerDashboardActivity"
+            android:name=".ui.pages.customer.CustomerDashboardActivity"
             android:exported="false" />
         <activity
             android:name=".ui.pages.partner.PartnerDashboardActivity"
