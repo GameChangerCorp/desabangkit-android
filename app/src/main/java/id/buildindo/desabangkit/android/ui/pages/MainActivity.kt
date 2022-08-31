@@ -1,33 +1,22 @@
 package id.buildindo.desabangkit.android.ui.pages
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import id.buildindo.desabangkit.android.core.data.local.datastore.DataStorePreference
-import id.buildindo.desabangkit.android.ui.viewmodel.PhotoViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import id.buildindo.desabangkit.android.core.utils.uriToFile
 import id.buildindo.desabangkit.android.databinding.ActivityMainBinding
-import id.buildindo.desabangkit.android.reduceFileImage
+import id.buildindo.desabangkit.android.ui.pages.auth.LoginActivity
 import id.buildindo.desabangkit.android.ui.viewmodel.DatastoreViewModel
-import id.buildindo.desabangkit.android.ui.viewmodel.PreferenceViewModelFactory
-import id.buildindo.desabangkit.android.uriToFile
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var viewModel: PhotoViewModel
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     private lateinit var _viewModelDataStore : DatastoreViewModel
 
 
@@ -39,9 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
-        val pref = DataStorePreference.getInstance(dataStore)
-        _viewModelDataStore = ViewModelProvider(this, PreferenceViewModelFactory(pref))[DatastoreViewModel::class.java]
+        _viewModelDataStore = ViewModelProvider(this,)[DatastoreViewModel::class.java]
 
 
         binding.btnGallery.setOnClickListener {
@@ -50,16 +37,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnUpload.setOnClickListener {
 //            uploadImage()
-        }
-
-        viewModel.addStory.observe(this) {
-            if (it.error == true){
-                Toast.makeText(this, "Error Ges ya Ges", Toast.LENGTH_SHORT).show()
-            }else{
-                val intent = Intent(this, PhotoResultActivity::class.java)
-                Toast.makeText(this, "Success Upload", Toast.LENGTH_SHORT).show()
-                startActivity(intent)
-            }
         }
 
         binding.btnLogout.setOnClickListener {

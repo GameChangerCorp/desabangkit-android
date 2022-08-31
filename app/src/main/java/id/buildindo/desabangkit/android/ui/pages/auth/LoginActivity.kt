@@ -2,32 +2,32 @@ package id.buildindo.desabangkit.android.ui.pages.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.core.data.remote.response.login.LoginRequest
+import id.buildindo.desabangkit.android.core.utils.AlertMessage
+import id.buildindo.desabangkit.android.core.utils.Constant
+import id.buildindo.desabangkit.android.core.utils.InputChecker
 import id.buildindo.desabangkit.android.core.utils.InteractionUtils.hideKeyboard
+import id.buildindo.desabangkit.android.core.utils.Navigation
+import id.buildindo.desabangkit.android.core.utils.ViewVisibility.showLoading
 import id.buildindo.desabangkit.android.databinding.ActivityLoginBinding
-import id.buildindo.desabangkit.android.ui.pages.CustomerDashboardActivity
-import id.buildindo.desabangkit.android.ui.pages.partner.PartnerDashboardActivity
 import id.buildindo.desabangkit.android.ui.viewmodel.AuthViewModel
 import id.buildindo.desabangkit.android.ui.viewmodel.DatastoreViewModel
-import timber.log.Timber
+import id.buildindo.desabangkit.android.core.data.remote.response.login.Results as LoginResults
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var _binding : ActivityLoginBinding
+    private lateinit var _binding: ActivityLoginBinding
     private val _viewModel: AuthViewModel by viewModels()
-    private lateinit var _viewModelDataStore : DatastoreViewModel
+    private lateinit var _viewModelDataStore: DatastoreViewModel
 
     private var _email = ""
     private var _password = ""
+    private var _roles = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,96 +48,54 @@ class LoginActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
-        _viewModel.loginResponse.observe(this@LoginActivity){
-            Timber.d("cek dapet datanya ga ya coy $it")
-            if (it.code == 200){
-                showLoading(false)
-                _viewModelDataStore.saveLoginState(true)
-                _viewModelDataStore.saveBearerToken(it.result?.token!!)
-                _viewModelDataStore.saveUsername(it.result.account?.fullname!!)
-                val roles = it.result.account.role?.get(0)?.rolelabel!!
-                _viewModelDataStore.saveUserRoles(roles)
-                moveToDashboard(roles)
-                Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
-            }else{
-                if (it.messages.toString() == "need to verification email"){
+        _viewModel.loginResponse.observe(this@LoginActivity) {
+            if (it.code == Constant.ResponseCode.SUCCESS) {
+                showLoading(false, _binding.progressBar)
+                saveAuthData(it.result)
+                AlertMessage.showSnackbarNoAction(_binding.root, it.messages.toString(), 5000)
+            } else {
+                if (it.messages.toString() == Constant.ResponseMessage.NEED_VERIFICATION) {
                     intent = Intent(this, AccountVerificationActivity::class.java)
-                        .putExtra("email", _email)
-                        .putExtra("password", _password)
+                    _viewModelDataStore.saveUserEmail(_email)
+                    _viewModelDataStore.saveUserPassword(_password)
                     startActivity(intent)
                 }
-                showLoading(false)
-                Snackbar.make(_binding.root, it.messages.toString(), Toast.LENGTH_SHORT).show()
+                showLoading(false, _binding.progressBar)
+                AlertMessage.showSnackbarNoAction(_binding.root, it.messages.toString(), 5000)
             }
         }
     }
 
-    private fun moveToDashboard(roles: String){
-        when(roles){
-            "PPN" -> {
-                moveToActivity<PartnerDashboardActivity>()
-            }
-            "Customer" -> {
-                moveToActivity<CustomerDashboardActivity>()
-            }
-        }
-    }
-
-    private inline fun <reified T> moveToActivity() {
-        intent = Intent(this, T::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun login(){
+    private fun login() {
         _binding.apply {
             _email = edtEmail.text.toString().trim()
-            val emailCondition: Boolean
             _password = edtPassword.text.toString().trim()
-            val passwordCondition: Boolean
 
-            when {
-                _email.isEmpty() -> {
-                    tilEmail.error = "Silahkan masukkan email Anda terlebih dahulu."
-                    emailCondition = false
-                }
-                !Patterns.EMAIL_ADDRESS.matcher(_email).matches() -> {
-                    tilEmail.error = "Email Anda tidak valid."
-                    emailCondition = false
-                }
-                else -> {
-                    tilEmail.error = null
-                    emailCondition = true
-                }
-            }
+            InputChecker.checkEmail(_email, tilEmail)
+            InputChecker.checkPassword(_password, tilPassword)
 
-            when {
-                _password.isEmpty() -> {
-                    tilPassword.error = "Silahkan masukkan password Anda terlebih dahulu."
-                    passwordCondition = false
-                }
-                _password.length < 6 -> {
-                    tilPassword.error = "Password harus lebih dari 6 Huruf"
-                    passwordCondition = false
-                }
-                else -> {
-                    tilPassword.error = null
-                    passwordCondition = true
-                }
-            }
-
-            if (emailCondition && passwordCondition){
-                btnLogin.isClickable = false
-                btnLogin.isActivated = false
-                _viewModel.loginUser(
-                    LoginRequest(_email, _password)
+            if (InputChecker.checkEmail(_email, tilEmail) && InputChecker.checkPassword(
+                    _password,
+                    tilPassword
                 )
-                showLoading(true)
+            ) {
+                _viewModel.loginUser(LoginRequest(_email, _password))
+                showLoading(true, _binding.progressBar)
             }
         }
     }
 
-    private fun showLoading(loading: Boolean){
-        if (loading) _binding.progressBar.visibility = View.VISIBLE else _binding.progressBar.visibility = View.GONE
+    private fun saveAuthData(results: LoginResults?) {
+        if (results != null) {
+            _viewModelDataStore.apply {
+                _roles = results.account?.role?.get(0)?.rolelabel!!
+                _viewModelDataStore.saveLoginState(true)
+                _viewModelDataStore.saveBearerToken(results.token!!)
+                _viewModelDataStore.saveUsername(results.account.fullname!!)
+                _viewModelDataStore.saveUserId(results.account.id!!)
+                _viewModelDataStore.saveUserRoles(_roles)
+            }
+            Navigation.moveToDashboard(_roles, this, this)
+        }
     }
 }

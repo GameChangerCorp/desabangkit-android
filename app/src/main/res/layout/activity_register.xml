@@ -4,132 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.pages.RegisterActivity">
+    tools:context=".ui.pages.auth.RegisterActivity">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Ini Halaman Daftar"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_fullname"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Nama Lengkap"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_fullname"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Email"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/til_fullname">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_email"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Kata Sandi"
-        app:endIconMode="password_toggle"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/til_email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="50dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_re_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Ketik ulang Kata Sandi"
-        app:endIconMode="password_toggle"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/til_password">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_re_password"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="50dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        app:cornerRadius="5dp"
-        android:text="Daftar"
-        app:layout_constraintTop_toBottomOf="@+id/til_re_password" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginHorizontal="16dp"
-        android:text="Sudah Punya Akun? Silahkan Login"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressBar"
-        android:background="@color/shadow_60"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:orientation="vertical">
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/register_navigation" />
 
-        <ProgressBar
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="100dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

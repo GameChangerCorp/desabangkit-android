@@ -4,39 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.pages.LoginActivity">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressBar"
-        android:background="@color/shadow_60"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <ProgressBar
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="100dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".ui.pages.auth.LoginActivity">
 
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <ImageView
+        android:id="@+id/ivBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Ini Halaman Login"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_header_login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lt_image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBack"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:layout_marginTop="20dp"
+        app:lottie_rawRes="@raw/welcome" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
@@ -44,9 +34,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="Email"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+        app:boxStrokeColor="@color/fern"
+        app:hintTextColor="@color/fern"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        android:hint="@string/email"
+        android:layout_marginHorizontal="28dp"
+        app:layout_constraintTop_toBottomOf="@+id/lt_image">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_email"
@@ -60,10 +56,16 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Kata Sandi"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="28dp"
+        android:hint="@string/password"
         app:endIconMode="password_toggle"
-        android:layout_marginHorizontal="16dp"
+        app:boxStrokeColor="@color/fern"
+        app:hintTextColor="@color/fern"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
         app:layout_constraintTop_toBottomOf="@+id/til_email">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -74,26 +76,74 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tvForgetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="28dp"
+        android:text="Lupa Kata Sandi?"
+        android:textSize="16sp"
+        android:textColor="@color/killarney"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_password" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        app:cornerRadius="5dp"
-        android:text="Masuk"
-        app:layout_constraintTop_toBottomOf="@+id/til_password" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="28dp"
+        android:fontFamily="@font/poppins_medium"
+        android:backgroundTint="@color/fern"
+        android:textSize="16sp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        app:elevation="0dp"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+        android:text="@string/signin"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgetPassword" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginHorizontal="16dp"
-        android:text="Belum Punya Akun? Silahkan Daftar"
-        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="28dp"
+        android:fontFamily="@font/poppins_medium"
         android:backgroundTint="@color/white"
+        android:textSize="16sp"
+        android:textColor="@color/fern"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        app:cornerRadius="16dp"
+        app:elevation="0dp"
+        android:textAllCaps="false"
+        app:strokeColor="@color/fern"
+        app:strokeWidth="1dp"
+        android:text="@string/dont_have_account"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progressBar"
+        android:background="@color/shadow_60"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="8dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="8dp"
+            android:layout_marginBottom="100dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
