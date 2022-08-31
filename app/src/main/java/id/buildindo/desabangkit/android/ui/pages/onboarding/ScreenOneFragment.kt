@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
 import id.buildindo.desabangkit.android.databinding.FragmentScreenOneBinding
 
-
+@AndroidEntryPoint
 class ScreenOneFragment : Fragment() {
     private lateinit var _binding : FragmentScreenOneBinding
 
