@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.buildindo.desabangkit.android.core.data.remote.api.ApiConfig
+import id.buildindo.desabangkit.android.core.data.remote.api.ApiDummyService
 import id.buildindo.desabangkit.android.core.data.remote.api.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,12 +46,20 @@ class NetworkModule {
     @Provides
     fun provideApiService(client: OkHttpClient) : ApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://api-desabangkit.herokuapp.com")
+            .baseUrl("https://api-desabangkit.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
         return retrofit.create(ApiService::class.java)
     }
 
-
+    @Provides
+    fun provideApiDummyService(client: OkHttpClient) : ApiDummyService {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://desabangkit-backend-dummy.herokuapp.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+        return retrofit.create(ApiDummyService::class.java)
+    }
 }
