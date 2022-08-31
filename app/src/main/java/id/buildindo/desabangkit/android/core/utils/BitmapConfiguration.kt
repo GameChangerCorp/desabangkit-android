@@ -1,4 +1,4 @@
-package id.buildindo.desabangkit.android
+package id.buildindo.desabangkit.android.core.utils
 
 import android.app.Application
 import android.content.ContentResolver
@@ -12,6 +12,7 @@ import android.os.Environment
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import id.buildindo.desabangkit.android.R
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
