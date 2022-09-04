@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
+import id.buildindo.desabangkit.android.core.domain.model.bundle.register.RegisterData
 import id.buildindo.desabangkit.android.core.utils.Constant
 import id.buildindo.desabangkit.android.core.utils.InputChecker.checkEmail
 import id.buildindo.desabangkit.android.core.utils.InputChecker.checkFullName
@@ -17,6 +15,8 @@ import id.buildindo.desabangkit.android.core.utils.InputChecker.checkPassword
 import id.buildindo.desabangkit.android.core.utils.InteractionUtils.hideKeyboard
 import id.buildindo.desabangkit.android.core.utils.Navigation
 import id.buildindo.desabangkit.android.core.utils.Navigation.finishActivity
+import id.buildindo.desabangkit.android.core.utils.SendBundleData.getBundleExtra
+import id.buildindo.desabangkit.android.core.utils.SendBundleData.sendBundleExtra
 import id.buildindo.desabangkit.android.databinding.FragmentRegisterBinding
 
 @AndroidEntryPoint
@@ -27,6 +27,7 @@ class RegisterFragment : Fragment() {
     private var _email = ""
     private var _password = ""
     private val _bundle = Bundle()
+    private var _registerData = RegisterData()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +40,8 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeBinding()
-        getBundleData()
-        _binding.edtFullname.setText(_name)
-        _binding.edtEmail.setText(_email)
-        _binding.edtPassword.setText(_password)
+        _registerData =
+            arguments?.getBundleExtra<RegisterData>(Constant.GetIntentType.REGISTER_DATA)!!
     }
 
     private fun initializeBinding() {
@@ -55,6 +54,10 @@ class RegisterFragment : Fragment() {
             btnLogin.setOnClickListener {
                 activity?.let { finish -> finishActivity(finish) }
             }
+
+            edtFullname.setText(_registerData.name)
+            edtEmail.setText(_registerData.email)
+            edtPassword.setText(_registerData.password)
 
             ivBack.setOnClickListener {
                 activity?.let { finish -> finishActivity(finish) }
@@ -73,21 +76,16 @@ class RegisterFragment : Fragment() {
             checkPassword(_password, tilPassword)
 
             if (checkFullName(_name, tilFullname) && checkEmail(_email, tilEmail) && checkPassword(_password, tilPassword)) {
-                sendBundleData(_name, _email, _password)
+                _bundle.sendBundleExtra(
+                    Constant.GetIntentType.REGISTER_DATA,
+                    RegisterData(
+                        name = _name,
+                        email = _email,
+                        password = _password
+                    )
+                )
                 Navigation.movePagesFragment(requireParentFragment(), R.id.action_registerFragment_to_chooseRolesFragment, _bundle)
             }
         }
-    }
-
-    private fun sendBundleData(fullName: String, email: String, password: String) {
-        _bundle.putString(Constant.GetIntentType.FULL_NAME, fullName)
-        _bundle.putString(Constant.GetIntentType.EMAIL, email)
-        _bundle.putString(Constant.GetIntentType.PASSWORD, password)
-    }
-
-    private fun getBundleData() {
-        _name = arguments?.getString(Constant.GetIntentType.FULL_NAME) ?: ""
-        _email = arguments?.getString(Constant.GetIntentType.EMAIL) ?: ""
-        _password = arguments?.getString(Constant.GetIntentType.PASSWORD) ?: ""
     }
 }

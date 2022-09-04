@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
 import id.buildindo.desabangkit.android.core.data.remote.response.register.RegisterRequest
+import id.buildindo.desabangkit.android.core.domain.model.bundle.register.RegisterData
 import id.buildindo.desabangkit.android.core.utils.AlertMessage
 import id.buildindo.desabangkit.android.core.utils.Constant
 import id.buildindo.desabangkit.android.core.utils.Navigation
+import id.buildindo.desabangkit.android.core.utils.SendBundleData.getBundleExtra
+import id.buildindo.desabangkit.android.core.utils.SendBundleData.sendBundleExtra
 import id.buildindo.desabangkit.android.core.utils.ViewVisibility.showLoading
 import id.buildindo.desabangkit.android.databinding.FragmentChooseRolesBinding
 import id.buildindo.desabangkit.android.ui.adapter.RolesListAdapter
@@ -31,6 +33,7 @@ class ChooseRolesFragment : Fragment() {
     private var _dataName = ""
     private var _dataEmail = ""
     private var _dataPassword = ""
+    private var _registerData = RegisterData()
     private var _idRoles = ""
     private var _bundle = Bundle()
 
@@ -47,20 +50,30 @@ class ChooseRolesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _registerData =
+            arguments?.getBundleExtra<RegisterData>(Constant.GetIntentType.REGISTER_DATA)!!
+        initializeBinding()
+    }
 
-        getBundleData()
+    private fun initializeBinding() {
+        _binding.apply {
+            _binding.btnRegister.setOnClickListener { signUp() }
 
-        _binding.btnRegister.setOnClickListener {
-            signUp()
-        }
-
-        _binding.ivBack.setOnClickListener {
-            sendBundleData(_dataName, _dataEmail, _dataPassword)
-            Navigation.movePagesFragment(
-                requireParentFragment(),
-                R.id.action_chooseRolesFragment_to_registerFragment,
-                _bundle
-            )
+            _binding.ivBack.setOnClickListener {
+                _bundle.sendBundleExtra(
+                    Constant.GetIntentType.REGISTER_DATA,
+                    RegisterData(
+                        name = _dataName,
+                        email = _dataEmail,
+                        password = _dataPassword
+                    )
+                )
+                Navigation.movePagesFragment(
+                    requireParentFragment(),
+                    R.id.action_chooseRolesFragment_to_registerFragment,
+                    _bundle
+                )
+            }
         }
     }
 
@@ -77,31 +90,10 @@ class ChooseRolesFragment : Fragment() {
         _adapter.setRolesList(_rolesViewModel.getRolesData())
         _authViewModel.registerResponse.observe(viewLifecycleOwner) {
             when (it.code) {
-                Constant.ResponseCode.SUCCESS -> {
-                    showLoading(false, _binding.progressBar)
-                    routeToSuccess(true, it.messages.toString())
-                }
-                Constant.ResponseCode.FAILED -> {
-                    showLoading(false, _binding.progressBar)
-                    routeToSuccess(false, it.messages.toString())
-                }
-                else -> {
-                    showLoading(false, _binding.progressBar)
-                }
+                Constant.ResponseCode.SUCCESS -> routeToSuccess(true, it.messages.toString())
+                else -> routeToSuccess(false, it.messages.toString())
             }
         }
-    }
-
-    private fun sendBundleData(fullName: String, email: String, password: String) {
-        _bundle.putString(Constant.GetIntentType.FULL_NAME, fullName)
-        _bundle.putString(Constant.GetIntentType.EMAIL, email)
-        _bundle.putString(Constant.GetIntentType.PASSWORD, password)
-    }
-
-    private fun getBundleData() {
-        _dataName = arguments?.getString(Constant.GetIntentType.FULL_NAME).toString()
-        _dataEmail = arguments?.getString(Constant.GetIntentType.EMAIL).toString()
-        _dataPassword = arguments?.getString(Constant.GetIntentType.PASSWORD).toString()
     }
 
     private fun routeToSuccess(isSuccess: Boolean, message: String) {
@@ -111,6 +103,7 @@ class ChooseRolesFragment : Fragment() {
                 R.id.action_chooseRolesFragment_to_registrasionSuccessFragment
             )
         }
+        showLoading(false, _binding.progressBar)
         AlertMessage.showSnackbarNoAction(_binding.root, message, 5000)
     }
 
@@ -128,9 +121,9 @@ class ChooseRolesFragment : Fragment() {
         }
         _authViewModel.registerUser(
             RegisterRequest(
-                _dataName,
-                _dataEmail,
-                _dataPassword,
+                _registerData.name,
+                _registerData.email,
+                _registerData.password,
                 _idRoles
             )
         )
