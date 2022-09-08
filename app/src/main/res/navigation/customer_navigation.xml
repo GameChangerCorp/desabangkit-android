@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/inputProductsFragment"
-        android:name="id.buildindo.desabangkit.android.InputProductsFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.InputProductsFragment"
         android:label="fragment_input_products"
         tools:layout="@layout/fragment_input_products" >
         <action

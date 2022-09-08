@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.pages.products.InputProductsPhotoFragment">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_header_supply_products"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_products_photo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="28dp"
+        android:fontFamily="@font/poppins_medium"
+        android:backgroundTint="@color/fern"
+        android:textSize="16sp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        app:elevation="0dp"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+        android:text="@string/take_photo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_products_photo" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnUploadPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="28dp"
+        android:fontFamily="@font/poppins_medium"
+        android:backgroundTint="@color/fern"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        app:cornerRadius="16dp"
+        app:elevation="0dp"
+        android:textAllCaps="false"
+        android:text="@string/upload_photo"
+        app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="28dp"
+        android:fontFamily="@font/poppins_medium"
+        android:backgroundTint="@color/fern"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        app:cornerRadius="16dp"
+        app:elevation="0dp"
+        android:textAllCaps="false"
+        android:text="@string/next"
+        app:layout_constraintTop_toBottomOf="@+id/btnUploadPhoto" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

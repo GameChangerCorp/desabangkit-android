@@ -36,7 +36,10 @@
         <entry key="app/src/main/res/layout/fragment_customer_beranda.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_customer_transaction.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_detail_product.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_input_product_delivery_option.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_input_products.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_input_products_details.xml" value="0.3140625" />
+        <entry key="app/src/main/res/layout/fragment_input_products_photo.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_onboarding.xml" value="0.16277567545572913" />
         <entry key="app/src/main/res/layout/fragment_partner_beranda.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_partner_navigation.xml" value="0.23802083333333332" />

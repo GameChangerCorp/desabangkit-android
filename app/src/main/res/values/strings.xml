@@ -58,4 +58,5 @@
     <string name="product_input">Input Produk</string>
     <string name="product_save">Product Tersimpan</string>
     <string name="open_email">Buka Email</string>
+    <string name="delivery_option">Opsi Pengambilan</string>
 </resources>

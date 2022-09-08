@@ -10,7 +10,9 @@ import id.buildindo.desabangkit.android.core.domain.repository.IAuthRepository
 import retrofit2.Response
 import javax.inject.Inject
 
-class AuthUseCase @Inject constructor(private val repository: IAuthRepository) : IAuthUseCase {
+class AuthUseCase @Inject constructor(
+    private val repository: IAuthRepository,
+) : IAuthUseCase {
     override suspend fun registerUser(body: RegisterRequest): Response<RegisterResponse> =
         repository.registerUser(body)
 

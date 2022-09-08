@@ -1,4 +1,4 @@
-package id.buildindo.desabangkit.android
+package id.buildindo.desabangkit.android.ui.pages.products
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import id.buildindo.desabangkit.android.R
 import id.buildindo.desabangkit.android.core.data.remote.response.products.PostProductRequest
 import id.buildindo.desabangkit.android.core.utils.*
 import id.buildindo.desabangkit.android.databinding.FragmentInputProductsBinding
