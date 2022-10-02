@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.pages.auth.LoginActivity">
 
-
     <ImageView
         android:id="@+id/ivBack"
         android:layout_width="wrap_content"
