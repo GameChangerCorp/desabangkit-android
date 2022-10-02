@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
-import id.buildindo.desabangkit.android.core.data.remote.response.products.products.Product
+import id.buildindo.desabangkit.android.core.domain.model.Products
 import id.buildindo.desabangkit.android.core.utils.Navigation
 import id.buildindo.desabangkit.android.databinding.FragmentProductBinding
 import id.buildindo.desabangkit.android.ui.adapter.GridProductAdapter
@@ -48,13 +48,13 @@ class ProductFragment : Fragment() {
             rvProduct.adapter = _adapter
         }
         _adapter.onProductClick(object : OnProductClick{
-            override fun onItemClicked(product: Product) {
+            override fun onItemClicked(product: Products) {
                 val bundle = Bundle()
                 bundle.putString("productName", product.name)
                 bundle.putString("productPrice", product.price)
                 bundle.putString("productCategory", product.category)
                 bundle.putString("productUnit", product.unit)
-                bundle.putString("productPhoto", product.photoUrl)
+                bundle.putString("productPhoto", product.photo)
                 Navigation.movePagesFragment(requireParentFragment(), R.id.action_productFragment_to_detailProductFragment, bundle)
             }
         })
@@ -67,10 +67,8 @@ class ProductFragment : Fragment() {
         _binding.categoryTitle.text = _name
         Timber.d("cobaa cek dapet ga ini ada id nya $_id")
         _productsViewModel.getProductById(_id)
-        _productsViewModel.productById.observe(viewLifecycleOwner) {
-            if (it != null) {
-                it.data?.products?.let { products -> _adapter.setProductList(products) }
-            }
+        _productsViewModel.productById.observe(viewLifecycleOwner) { products ->
+           _adapter.setProductList(products)
         }
     }
 }

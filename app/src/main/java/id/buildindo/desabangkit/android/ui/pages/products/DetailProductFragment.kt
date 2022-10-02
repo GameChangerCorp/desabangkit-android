@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
+import id.buildindo.desabangkit.android.core.domain.model.bundle.register.InputProductData
 import id.buildindo.desabangkit.android.core.utils.Constant
 import id.buildindo.desabangkit.android.core.utils.Navigation
+import id.buildindo.desabangkit.android.core.utils.SendBundleData.sendBundleExtra
 import id.buildindo.desabangkit.android.core.utils.StringFormat
 import id.buildindo.desabangkit.android.databinding.FragmentDetailProductBinding
 
@@ -50,18 +52,22 @@ class DetailProductFragment : Fragment() {
         _binding.apply {
             tvProductName.text = _name
             tvProductCategory.text = _categories
-            tvProductPrice.text = StringFormat.currencyFormat(_price, _unit)
+            tvProductPrice.text = resources.getString(R.string.currency_placeholder_3, StringFormat.currencyFormat(_price))
             Glide.with(this@DetailProductFragment)
                 .asBitmap()
                 .load(_imageUrl)
                 .into(_binding.imageDetail)
             btnPreOrder.setOnClickListener {
                 val bundle = Bundle()
-                bundle.putString("productName", _name)
-                bundle.putString("productPrice", _price)
-                bundle.putString("productCategory", _categories)
-                bundle.putString(Constant.BundleName.OPEN_PAGES_FROM, Constant.Pages.DETAIL_PRODUCT_PAGES)
-                Navigation.movePagesFragment(requireParentFragment(), R.id.action_detailProductFragment_to_inputProductsFragment, bundle)
+                bundle.sendBundleExtra(
+                    Constant.GetIntentType.INPUT_PRODUCT_DATA,
+                    InputProductData(
+                        productName = _name,
+                        productCategory = _categories,
+                        isPreorder = true
+                    )
+                )
+                Navigation.movePagesFragment(requireParentFragment(), R.id.action_detailProductFragment2_to_inputProductsPhotoFragment, bundle)
             }
         }
     }

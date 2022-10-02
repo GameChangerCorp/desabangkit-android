@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
-import id.buildindo.desabangkit.android.core.data.remote.response.products.category.Category
+import id.buildindo.desabangkit.android.core.domain.model.Category
 import id.buildindo.desabangkit.android.core.utils.Navigation
 import id.buildindo.desabangkit.android.databinding.FragmentCategoriesBinding
 import id.buildindo.desabangkit.android.ui.adapter.VerticalCategoriesAdapter
@@ -56,9 +56,7 @@ class CategoriesFragment : Fragment() {
     private fun observeData() {
         _productsViewModel.getProductCategories()
         _productsViewModel.categories.observe(viewLifecycleOwner) {
-            if (it != null) {
-                it.data?.productCategories?.let { category -> _adapter.setCategoryList(category) }
-            }
+            _adapter.setCategoryList(it)
         }
     }
 }

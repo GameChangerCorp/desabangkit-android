@@ -9,8 +9,7 @@ object ViewVisibility {
         if (loading) progressBar.visibility = View.VISIBLE else progressBar.visibility = View.GONE
 
 
-    fun Context.show() = View.VISIBLE
+    fun View.show() = View.VISIBLE
 
-
-    fun Context.remove() = View.GONE
+    fun View.remove() = View.GONE
 }

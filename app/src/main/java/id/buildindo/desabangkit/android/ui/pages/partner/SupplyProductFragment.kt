@@ -34,7 +34,7 @@ class SupplyProductFragment : Fragment() {
         _binding.apply {
             btnInputProduct.setOnClickListener {
                 val bundle = bundleOf(Constant.BundleName.OPEN_PAGES_FROM to Constant.Pages.SUPPLY_PRODUCT_PAGES)
-                Navigation.movePagesFragment(requireParentFragment(), R.id.action_navigation_supply_to_inputProductsFragment2, bundle)
+                Navigation.movePagesFragment(requireParentFragment(), R.id.action_navigation_supply_to_inputProductsPhotoFragment, bundle)
             }
         }
     }

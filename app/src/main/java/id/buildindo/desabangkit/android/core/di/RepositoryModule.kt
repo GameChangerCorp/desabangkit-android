@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import id.buildindo.desabangkit.android.core.data.AuthRepository
-import id.buildindo.desabangkit.android.core.data.ProductRepository
+import id.buildindo.desabangkit.android.core.data.repository.AuthRepository
+import id.buildindo.desabangkit.android.core.data.repository.ProductRepository
 import id.buildindo.desabangkit.android.core.domain.repository.IAuthRepository
 import id.buildindo.desabangkit.android.core.domain.repository.IProductRepository
 

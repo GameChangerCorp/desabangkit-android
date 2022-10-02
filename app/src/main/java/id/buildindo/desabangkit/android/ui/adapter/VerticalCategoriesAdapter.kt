@@ -3,8 +3,7 @@ package id.buildindo.desabangkit.android.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import id.buildindo.desabangkit.android.core.data.remote.response.products.category.Category
-import id.buildindo.desabangkit.android.databinding.CardProductItemBinding
+import id.buildindo.desabangkit.android.core.domain.model.Category
 import id.buildindo.desabangkit.android.databinding.ListCategoryItemBinding
 import timber.log.Timber
 

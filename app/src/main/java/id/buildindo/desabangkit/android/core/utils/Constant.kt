@@ -6,6 +6,7 @@ class Constant {
         const val PASSWORD = "password"
         const val FULL_NAME = "full_name"
         const val REGISTER_DATA = "registerData"
+        const val INPUT_PRODUCT_DATA = "inputProductData"
     }
 
     object Roles {

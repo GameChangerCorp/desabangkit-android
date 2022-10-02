@@ -2,12 +2,12 @@ package id.buildindo.desabangkit.android.ui.viewmodel
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.buildindo.desabangkit.android.core.data.local.datastore.DataStorePreference
+import id.buildindo.desabangkit.android.core.data.local.datastore.DataStoreRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DatastoreViewModel @Inject constructor(private val pref: DataStorePreference) : ViewModel() {
+class DatastoreViewModel @Inject constructor(private val pref: DataStoreRepository) : ViewModel() {
     fun getLoginState(): LiveData<Boolean> = pref.getLoginState().asLiveData()
     fun getBearerToken(): LiveData<String> = pref.getBearerToken().asLiveData()
     fun getUsername(): LiveData<String> = pref.getUserName().asLiveData()

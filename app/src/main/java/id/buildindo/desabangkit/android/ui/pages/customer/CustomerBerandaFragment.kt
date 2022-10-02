@@ -10,20 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.buildindo.desabangkit.android.R
-import id.buildindo.desabangkit.android.core.data.remote.response.products.products.Product
+import id.buildindo.desabangkit.android.core.domain.model.Products
 import id.buildindo.desabangkit.android.core.utils.Navigation
 import id.buildindo.desabangkit.android.databinding.FragmentCustomerBerandaBinding
 import id.buildindo.desabangkit.android.ui.adapter.HorizontalProductAdapter
-import id.buildindo.desabangkit.android.ui.adapter.OnProductClick
 import id.buildindo.desabangkit.android.ui.viewmodel.DatastoreViewModel
 import id.buildindo.desabangkit.android.ui.viewmodel.ProductsViewModel
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CustomerBerandaFragment : Fragment() {
 
-    private val _productsViewModel : ProductsViewModel by viewModels()
     private lateinit var _dataStoreViewModel : DatastoreViewModel
+    private val _productsViewModel : ProductsViewModel by viewModels()
     private lateinit var _adapter: HorizontalProductAdapter
     private lateinit var _binding: FragmentCustomerBerandaBinding
 
@@ -59,25 +57,22 @@ class CustomerBerandaFragment : Fragment() {
             rvProduct.adapter = _adapter
         }
 
-        _adapter.onProductClick(object : OnProductClick{
-            override fun onItemClicked(product: Product) {
+        _adapter.onProductClick(object : HorizontalProductAdapter.OnProductClick{
+            override fun onItemClicked(product: Products) {
                 val bundle = Bundle()
                 bundle.putString("productName", product.name)
                 bundle.putString("productPrice", product.price)
                 bundle.putString("productCategory", product.category)
                 bundle.putString("productUnit", product.unit)
-                bundle.putString("productPhoto", product.photoUrl)
-                Navigation.movePagesFragment(requireParentFragment(), R.id.action_navigation_beranda_to_detailProductFragment, bundle)
-            }
+                bundle.putString("productPhoto", product.photo)
+                Navigation.movePagesFragment(requireParentFragment(), R.id.action_navigation_beranda_to_detailProductFragment, bundle)            }
         })
     }
 
     private fun observeData() {
         _productsViewModel.getAllProduct()
         _productsViewModel.allProduct.observe(viewLifecycleOwner) {
-            if (it != null) {
-                it.data?.products?.let { products -> _adapter.setProductList(products) }
-            }
+            it?.let { products -> _adapter.setProductList(products) }
         }
     }
 

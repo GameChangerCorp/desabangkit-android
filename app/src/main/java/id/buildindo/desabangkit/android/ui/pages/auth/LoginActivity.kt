@@ -93,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
                 _viewModelDataStore.saveBearerToken(results.token!!)
                 _viewModelDataStore.saveUsername(results.account.fullname!!)
                 _viewModelDataStore.saveUserId(results.account.id!!)
+                _viewModelDataStore.saveUserEmail(results.account.email!!)
                 _viewModelDataStore.saveUserRoles(_roles)
             }
             Navigation.moveToDashboard(_roles, this, this)

@@ -27,21 +27,30 @@ class RegisterFragment : Fragment() {
     private var _email = ""
     private var _password = ""
     private val _bundle = Bundle()
-    private var _registerData = RegisterData()
+    private var _registerData = RegisterData(
+        _name,
+        _email,
+        _password
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(layoutInflater, container, false)
+        _registerData =
+            arguments?.getBundleExtra<RegisterData>(Constant.GetIntentType.REGISTER_DATA)
+                ?: RegisterData(
+                    _name,
+                    _email,
+                    _password
+                )
         return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeBinding()
-        _registerData =
-            arguments?.getBundleExtra<RegisterData>(Constant.GetIntentType.REGISTER_DATA)!!
     }
 
     private fun initializeBinding() {
@@ -75,7 +84,11 @@ class RegisterFragment : Fragment() {
             checkEmail(_email, tilEmail)
             checkPassword(_password, tilPassword)
 
-            if (checkFullName(_name, tilFullname) && checkEmail(_email, tilEmail) && checkPassword(_password, tilPassword)) {
+            if (checkFullName(_name, tilFullname) && checkEmail(_email, tilEmail) && checkPassword(
+                    _password,
+                    tilPassword
+                )
+            ) {
                 _bundle.sendBundleExtra(
                     Constant.GetIntentType.REGISTER_DATA,
                     RegisterData(
@@ -84,7 +97,11 @@ class RegisterFragment : Fragment() {
                         password = _password
                     )
                 )
-                Navigation.movePagesFragment(requireParentFragment(), R.id.action_registerFragment_to_chooseRolesFragment, _bundle)
+                Navigation.movePagesFragment(
+                    requireParentFragment(),
+                    R.id.action_registerFragment_to_chooseRolesFragment,
+                    _bundle
+                )
             }
         }
     }

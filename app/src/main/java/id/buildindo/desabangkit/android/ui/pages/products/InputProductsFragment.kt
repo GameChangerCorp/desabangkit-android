@@ -128,10 +128,10 @@ class InputProductsFragment : Fragment() {
                         requireParentFragment(),
                         R.id.action_inputProductsFragment_to_navigation_transaction
                     )
-                    Constant.Roles.PPN -> Navigation.movePagesFragment(
-                        requireParentFragment(),
-                        R.id.action_inputProductsFragment2_to_navigation_transaction
-                    )
+//                    Constant.Roles.PPN -> Navigation.movePagesFragment(
+//                        requireParentFragment(),
+//                        R.id.action_inputProductsFragment2_to_navigation_transaction
+//                    )
                 }
             }
         }
