@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/getAllHistory"
+        android:title="@string/all_transaction" />
+    <item
+        android:id="@+id/preorderTrue"
+        android:title="@string/preorder" />
+    <item
+        android:id="@+id/preorderFalse"
+        android:title="@string/not_preorder" />
+</menu>

@@ -9,7 +9,11 @@
         android:id="@+id/navigation_beranda"
         android:name="id.buildindo.desabangkit.android.ui.pages.partner.PartnerBerandaFragment"
         android:label="fragment_partner_beranda"
-        tools:layout="@layout/fragment_partner_beranda" />
+        tools:layout="@layout/fragment_partner_beranda" >
+        <action
+            android:id="@+id/action_navigation_beranda_to_detailProductFragment2"
+            app:destination="@id/detailProductFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_transaction"
         android:name="id.buildindo.desabangkit.android.ui.pages.partner.TransactionFragment"
@@ -25,27 +29,74 @@
         android:name="id.buildindo.desabangkit.android.ui.pages.partner.SupplyProductFragment"
         android:label="fragment_supply_product"
         tools:layout="@layout/fragment_supply_product" >
-        <action
-            android:id="@+id/action_navigation_supply_to_inputProductsFragment2"
-            app:destination="@id/inputProductsFragment2" />
         <argument
             android:name="openFrom"
             app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_supply_to_inputProductsPhotoFragment"
+            app:destination="@id/inputProductsPhotoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/inputProductsFragment2"
-        android:name="id.buildindo.desabangkit.android.ui.pages.products.InputProductsFragment"
-        android:label="fragment_input_products"
-        tools:layout="@layout/fragment_input_products" >
+        android:id="@+id/inputProductsPhotoFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.InputProductsPhotoFragment"
+        android:label="fragment_input_products_photo"
+        tools:layout="@layout/fragment_input_products_photo" >
         <action
-            android:id="@+id/action_inputProductsFragment2_to_navigation_supply"
-            app:destination="@id/navigation_supply"
-            app:popUpTo="@id/inputProductsFragment2"
+            android:id="@+id/action_inputProductsPhotoFragment_to_inputProductsDetailsFragment"
+            app:destination="@id/inputProductsDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputProductsDetailsFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.InputProductsDetailsFragment"
+        android:label="fragment_input_products_details"
+        tools:layout="@layout/fragment_input_products_details" >
+        <action
+            android:id="@+id/action_inputProductsDetailsFragment_to_inputProductDeliveryOptionFragment"
+            app:destination="@id/inputProductDeliveryOptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputProductDeliveryOptionFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.InputProductDeliveryOptionFragment"
+        android:label="fragment_input_product_delivery_option"
+        tools:layout="@layout/fragment_input_product_delivery_option" >
+        <action
+            android:id="@+id/action_inputProductDeliveryOptionFragment_to_inputProductReviewFragment"
+            app:destination="@id/inputProductReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputProductReviewFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.InputProductReviewFragment"
+        android:label="fragment_input_product_review"
+        tools:layout="@layout/fragment_input_product_review" >
+        <action
+            android:id="@+id/action_inputProductReviewFragment_to_successInputProductFragment"
+            app:destination="@id/successInputProductFragment"
+            app:popUpTo="@id/navigation_supply"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/successInputProductFragment"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.SuccessInputProductFragment"
+        android:label="fragment_success_input_product"
+        tools:layout="@layout/fragment_success_input_product" >
+        <action
+            android:id="@+id/action_successInputProductFragment_to_inputProductsPhotoFragment"
+            app:destination="@id/inputProductsPhotoFragment"
+            app:popUpTo="@id/successInputProductFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_inputProductsFragment2_to_navigation_transaction"
-            app:destination="@id/navigation_transaction"
-            app:popUpTo="@id/inputProductsFragment2"
+            android:id="@+id/action_successInputProductFragment_to_navigation_beranda"
+            app:destination="@id/navigation_beranda"
+            app:popUpTo="@id/successInputProductFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailProductFragment2"
+        android:name="id.buildindo.desabangkit.android.ui.pages.products.DetailProductFragment"
+        android:label="fragment_detail_product"
+        tools:layout="@layout/fragment_detail_product" >
+        <action
+            android:id="@+id/action_detailProductFragment2_to_inputProductsPhotoFragment"
+            app:destination="@id/inputProductsPhotoFragment" />
     </fragment>
 </navigation>
